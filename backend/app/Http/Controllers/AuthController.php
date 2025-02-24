@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\Account;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -14,9 +14,9 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            /** @var \App\Models\User $user **/
-            $user = Auth::user();
-            $token = $user->createToken('AccessToken')->plainTextToken;
+            /** @var \App\Models\Account $account **/
+            $account = Auth::user();
+            $token = $account->createToken('AccessToken')->plainTextToken;
             return response()->json(['token' => $token], 200);
         } else {
             return response()->json(['error' => '認証に失敗しました'], 401);
@@ -27,8 +27,9 @@ class AuthController extends Controller
     {
         return response()->json(
             [
-                $request->user()->name,
-                $request->user()->email,
+                'name' => $request->user()->name,
+                'email' => $request->user()->email,
+                'birthday' => $request->user()->birthday,
             ]
         );
     }

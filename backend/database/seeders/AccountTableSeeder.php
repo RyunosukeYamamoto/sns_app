@@ -7,14 +7,14 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class UserTableSeeder extends Seeder
+class AccountTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        DB::table('users')->insert([
+        DB::table('accounts')->insert([
             // admin権限を持つユーザー
             'name' => 'test1',
             'email' => 'test1@example.com',
@@ -22,7 +22,7 @@ class UserTableSeeder extends Seeder
             'password' => bcrypt('test1'),
             'birthday' => '1998-07-25'
         ]);
-        DB::table('users')->insert([
+        DB::table('accounts')->insert([
             // admin権限を持たないユーザー
             'name' => 'test2',
             'email' => 'test2@example.com',

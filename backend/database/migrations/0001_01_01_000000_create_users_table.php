@@ -17,8 +17,6 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('is_admin')->default(false)->comment('true->admin権限あり');
-            $table->date('birthday')->nullable()->default(null);
             $table->rememberToken();
             $table->timestamps();
         });
