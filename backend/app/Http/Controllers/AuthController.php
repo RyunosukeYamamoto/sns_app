@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SignupFormRequest;
 use App\Models\Account;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -38,5 +41,12 @@ class AuthController extends Controller
     {
         $request->user()->currentAccessToken()->delete();
         return response()->json(['message' => 'ログアウトしました。'], 200);
+    }
+
+    public function signup(SignupFormRequest $request)
+    {
+        $safe = $request->safe()->all();
+        Log::alert($safe);
+        $user = Account::create([...$safe, "password" => Hash::make($request->password)]);
     }
 }
