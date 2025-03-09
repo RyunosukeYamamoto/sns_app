@@ -14,6 +14,29 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    public function spa_login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+
+            return response()->json(Auth::user());
+        }
+        return response()->json([], 401);
+    }
+
+    public function spa_logout(Request $request)
+    {
+        Auth::guard('web')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return response()->json(true);
+    }
+
     //  ログイン時はsanctumそんな関係ない (?)
     public function login(Request $request)
     {

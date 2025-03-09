@@ -11,9 +11,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('test',[TestController::class, 'index']);
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/spa/login', [AuthController::class, 'spa_login'])->name('spa_login');
 Route::post('/signup', [AuthController::class, 'signup'])->name('signup');
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/user', [AuthController::class, 'user']);
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('/spa/logout', [AuthController::class, 'spa_logout'])->name('spa_logout');
 });
